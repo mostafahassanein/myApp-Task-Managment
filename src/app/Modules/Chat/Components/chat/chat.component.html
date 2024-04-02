@@ -1,0 +1,58 @@
+<div style="padding-left: 5%;">
+    <p-dropdown [options]="friends" [(ngModel)]="selectedfriend" optionValue="username"
+ optionLabel="username" [showClear]="true" placeholder="Select a Friend" (onChange)="onFriendSelectionChange($event)"></p-dropdown>
+</div>
+<div style="padding-left: 5%;">
+    <div style="width: 70%; height: 200px; border-color: black;">
+        <div *ngFor="let message of messages" class="message">
+            <span class="user">{{ message.user }} :</span>
+            <span class="text">{{ message.message }}</span>
+          </div>
+    </div>
+    
+    
+    <input type="text" [disabled]="checkSelctedFriend" pInputText placeholder="Message" [(ngModel)]="message" (keyup.enter)="sendMessage(selectedfriend)"   [style]="{'width':'70%'}" />
+
+    <p-button icon="pi pi-reply" [disabled]="checkSelctedFriend" (click)="sendMessage(selectedfriend)" label="Send" styleClass="p-button-success mt-4">
+    </p-button>  
+</div>
+
+<!--<p-tabView>
+    <p-tabPanel header="mostafa">
+        <div style="padding-left: 5%;">
+            <div style="width: 70%; height: 200px; border-color: black;">
+                <div *ngFor="let message of messages" class="message">
+                    <span class="user">{{ message.user }} :</span>
+                    <span class="text">{{ message.message }}</span>
+                  </div>
+            </div>
+            <input type="text"  class="me-2 mb-2" placeholder="Message" [(ngModel)]="message" (keyup.enter)="sendMessage('mostafa')"   [style]="{'width':'70%'}"  />   
+            <button (click)="sendMessage('mostafa')">Send</button>      
+        </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="adham">
+        <div style="padding-left: 5%;">
+            <div style="width: 70%; height: 200px; border-color: black;">
+                <div *ngFor="let message of messages" class="message">
+                    <span class="user">{{ message.user }}:</span>
+                    <span class="text">{{ message.message }}</span>
+                  </div>
+            </div>
+            <input type="text"  class="me-2 mb-2" placeholder="Message" [(ngModel)]="message" (keyup.enter)="sendMessage('adham')"   [style]="{'width':'70%'}"  />      
+            <button (click)="sendMessage('adham')">Send</button>   
+        </div> 
+    </p-tabPanel>
+    <p-tabPanel header="lara">
+        <div style="padding-left: 5%;">
+            <div style="width: 70%; height: 200px; border-color: black;">
+                <div *ngFor="let message of messages" class="message">
+                    <span class="user">{{ message.user }}:</span>
+                    <span class="text">{{ message.message }}</span>
+                  </div>
+            </div>
+            <input type="text"  class="me-2 mb-2" placeholder="Message" [(ngModel)]="message" (keyup.enter)="sendMessage('lara')"   [style]="{'width':'70%'}"  />    
+            <button (click)="sendMessage('lara')">Send</button>     
+        </div>
+    </p-tabPanel>
+</p-tabView>-->

@@ -1,0 +1,32 @@
+
+<div [hidden]="LoginCardVisible">
+    <p-card  [style]="{ width: '460px' }">
+        <ng-template pTemplate="header">
+            <br /><br />
+            <div style="padding: 3%;">
+            <div class="row">
+                
+                <div class="col-md-10">
+                    <label  class="me-2" [style]="{'width':'100%'}">Username</label>
+                    <input type="text" [maxLength]="20" class="me-2 mb-2" placeholder="Username"   [(ngModel)]="LoginUsername"  [style]="{'width':'100%', 'height':'70%'}"  />         
+                </div>
+            </div>
+            <br />
+                <div class="row">
+                <div class="col-md-10">
+                    <label  class="me-2" [style]="{'width':'100%'}">Password</label>
+                    <input type="password" class="me-2 mb-2" placeholder="Password"  [(ngModel)]="LoginUserPassword"  [style]="{'width':'100%', 'height':'70%'}"  />         
+                </div>
+            </div>  
+            
+        </div>
+        </ng-template>
+        <p-message [hidden]="message_error_hidden" severity="error" [text]="message_content"></p-message>
+            
+        <ng-template pTemplate="footer">
+            
+            <p-button label="Login"  (click)="login()" icon="pi pi-check"></p-button>
+            <!--<p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>-->
+        </ng-template>
+    </p-card>
+</div>

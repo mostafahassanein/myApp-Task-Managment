@@ -1,0 +1,36 @@
+<!--<div  class="row">
+    <div class="col-lg-5"></div>
+    <div class="col-lg-2">
+      <img  *ngIf="loader"
+        src="http://18.192.74.107/EETGlobal/assets/images/loader.gif" alt="" /> 
+      </div>
+        <div class="col-lg-2"></div>
+    </div>
+  -->
+  <aside class="left-sidebar">
+    <div class="d-flex no-block nav-text-box align-items-center">
+        <span><img src="../../../../../assets/images/logo.png" alt="elegant admin template" width="70" height="35"></span>
+        <a class="waves-effect waves-dark ml-auto hidden-sm-down" href="javascript:void(0)"><i
+                class="ti-menu"></i></a>
+        <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i
+                class="ti-menu ti-close"></i></a>
+    </div>
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+              <li> <a class="waves-effect waves-dark" [routerLink]="['/tasks']"  aria-expanded="false"><i
+                class="fa fa-list-alt"></i><span class="hide-menu">Tasks</span></a></li>
+  
+                <li> <a class="waves-effect waves-dark" [routerLink]="['/chat']" aria-expanded="false"><i
+                            class="fa fa-comment-o"></i><span class="hide-menu">Chat</span></a></li>
+                 
+                
+            </ul>
+           
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+  </aside>

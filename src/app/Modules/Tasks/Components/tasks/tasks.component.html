@@ -1,0 +1,198 @@
+<div  class="row">
+    <div class="col-lg-5"></div>
+    <div class="col-lg-2">
+      <img  *ngIf="loader"
+        src="../../../../../assets/images/loader.gif" alt="" /> 
+      </div>
+        <div class="col-lg-2"></div>
+    </div>
+
+    <div class="card">
+      <p-button *ngIf="!loader" icon="pi pi-reply" (click)="DisplayAddPopUp = true; this.formAddTask.reset()"  label="Add New"
+      styleClass="p-button-success ms-3 mb-3 mt-4"></p-button>
+
+      
+        <p-table *ngIf=" !loader" #dt [value]="allTasks" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" dataKey="id" [tableStyle]="{'min-width': '50rem'}"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"  [rowsPerPageOptions]="[10,25,50]"
+            [globalFilterFields]="[
+            'name','status','priority','dueDate','username','description'
+            ]">
+     <!--<ng-template pTemplate="caption">
+        <div style="text-align: right">
+          <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+          <input type="text" pInputText size="50" placeholder="Global Filter"
+                 (input)="applyFilterGlobal($event, 'contains')" style="width:auto" />
+        </div>
+      </ng-template>-->
+      <ng-template pTemplate="caption">
+        <div style="text-align: right">
+          <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" placeholder=" Search" pInputText (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+        </div>
+    </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" pSortableColumn="name">
+                    <div class="flex justify-content-between align-items-center">
+                       Name
+                      <p-sortIcon field="name"></p-sortIcon>
+                      <p-columnFilter type="text" field="name" display="menu"  class="ml-auto">
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                  <th style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" pSortableColumn="name">
+                    <div class="flex justify-content-between align-items-center">
+                       Description
+                      <p-sortIcon field="description"></p-sortIcon>
+                      <p-columnFilter type="text" field="description" display="menu"  class="ml-auto">
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                  <th style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" pSortableColumn="name">
+                    <div class="flex justify-content-between align-items-center">
+                       Status
+                      <p-sortIcon field="status"></p-sortIcon>
+                      <p-columnFilter type="text" field="status" display="menu"  class="ml-auto">
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                  <th style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" pSortableColumn="name">
+                    <div class="flex justify-content-between align-items-center">
+                       Priority
+                      <p-sortIcon field="priority"></p-sortIcon>
+                      <p-columnFilter type="text" field="priority" display="menu"  class="ml-auto">
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                  <th style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" pSortableColumn="name">
+                    <div class="flex justify-content-between align-items-center">
+                       Created by
+                      <p-sortIcon field="username"></p-sortIcon>
+                      <p-columnFilter type="text" field="username" display="menu"  class="ml-auto">
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                  <th style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" pSortableColumn="name">
+                    <div class="flex justify-content-between align-items-center">
+                       Due date
+                      <p-sortIcon field="dueDate"></p-sortIcon>
+                      <p-columnFilter type="text" field="dueDate" display="menu"  class="ml-auto">
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                    
+                  <th style="width: 8rem"></th>
+                  
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Task>
+                <tr>
+                    
+                    <td>{{Task.name}}</td>
+                    <td>{{Task.description}}</td>
+                    <td>{{Task.status}}</td>
+                    <td>{{Task.priority}}</td>
+                    <td>{{Task.username}}</td>
+                    <td>{{Task.dueDate}}</td>
+                    <td style="text-align: center">
+                        <button
+                          pButton
+                          type="button"
+                          (click)="viewTask(Task)" 
+                          class="p-button-primary"
+                          icon="pi pi-eye"
+                        ></button>
+                        
+                      </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+      
+          </p-table>
+        <p-dialog header="View Task" [(visible)]="TaskPopUp" [modal]="true"
+        [style]="{ width: '45vw',height: '25vw' }"
+        [draggable]="false" [resizable]="false">
+          <div class="mt-3">
+            <div *ngIf="Task" class="row">                    
+              <div class="col-md-4">
+                <p-dropdown [options]="statusList" [(ngModel)]="selectedStatus" optionValue="name"
+                optionLabel="name" [showClear]="true" placeholder="Select Status"(onChange)="onStatusSelectionChange($event)" ></p-dropdown>     
+              </div>
+              <div class="col-md-4">
+                <p-dropdown [options]="friends" [hidden]="isAssigneeHidden" [(ngModel)]="selectedfriend" optionValue="username"
+                 optionLabel="username" [showClear]="true" placeholder="Select member" ></p-dropdown>
+              </div>
+              
+            </div>              
+          </div>
+
+          <ng-template pTemplate="footer">
+            <div class="row" style="align-items: self-end;">
+            
+              <div class="col-lg-12">
+                <p-button icon="pi pi-reply" [disabled]="UpdateTaskButtonDisabled" (click)="UpdateTask(Task)" label="Update" styleClass="p-button-success mt-4">
+                </p-button>  
+          
+                <p-button icon="pi pi-lock" (click)="DeleteTask(Task)" [disabled]="DeleteTaskButtonDisabled" label="Delete" styleClass="p-button-danger mt-4">
+                </p-button>
+              </div>
+            </div>
+
+          </ng-template>
+       </p-dialog>
+       <p-dialog class="noprint row" [(visible)]="DisplayAddPopUp" [modal]="true"
+       [style]="{ width: '55vw',height: '45vw' }" [draggable]="false" [resizable]="false">
+      
+       <form [formGroup]="formAddTask">
+        <div style="background-color: #F1F1F1; height: 50px;">
+            <h2>Add New Task</h2>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-lg-4">
+            <input  formControlName="name"  pInputText   type="text" placeholder="Name"
+            [class.is-valid]="((formAddTask.controls['name'].value != null || formAddTask.controls['name'].value != '') && formAddTask.controls['name'].touched)"
+            [class.is-invalid]="((formAddTask.controls['name'].value == null || formAddTask.controls['name'].value == '') && formAddTask.controls['name'].touched)" />
+          </div>
+          <div class="col-lg-4">
+            <p-calendar formControlName="dueDate" placeholder="Due date" [iconDisplay]="'input'" [showIcon]="true"></p-calendar>
+          </div>
+            <div class="col-lg-4">
+                <p-dropdown formControlName="priority" [options]="priorities" [(ngModel)]="selectedPriority" optionValue="name"
+             optionLabel="name" [showClear]="true" placeholder="Select a Priority" ></p-dropdown>
+            </div>
+            
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-6">
+                   
+            <textarea rows="5" cols="30" formControlName="description" placeholder="Description" pInputTextarea class="form-control mb-2" style="width: 100%;"
+            [class.is-valid]="((formAddTask.controls['description'].value != null || formAddTask.controls['description'].value != '') && formAddTask.controls['description'].touched)"
+            [class.is-invalid]="((formAddTask.controls['description'].value == null || formAddTask.controls['description'].value == '') && formAddTask.controls['description'].touched)" ></textarea>
+           
+            </div>
+        </div>        
+       </form>
+
+       <p-message [hidden]="message_success_hidden" severity="success" [text]="message_content"></p-message> 
+       <p-message [hidden]="message_error_hidden" severity="error" [text]="message_content"></p-message>
+
+       <ng-template pTemplate="footer">
+        
+         <p-button icon="pi pi-reply" [hidden]="formAddTask.controls['name'].value == null || formAddTask.controls['name'].value == '' || formAddTask.controls['description'].value == null || formAddTask.controls['description'].value == ''
+         || formAddTask.controls['dueDate'].value == null || formAddTask.controls['dueDate'].value == ''
+         || formAddTask.controls['priority'].value == null || formAddTask.controls['priority'].value == '' "
+          label="Save" (click)="AddTask()" [disabled]="AddTaskButtonDisabled" styleClass="p-button-success"></p-button>
+
+         <!--<p-button icon="pi pi-lock" (click)="DisplayAddPopUp = false" label="Close" styleClass="p-button-danger mt-4">
+         </p-button>-->
+       </ng-template>
+     </p-dialog>
+   
+    </div>
